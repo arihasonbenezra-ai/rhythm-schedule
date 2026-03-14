@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Share Your Availability</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#142066;--blue:#2B5CE6;--blue-light:#EBF0FF;--blue-mid:#B8C8F8;--bg:#F7F8FC;--card:#fff;--border:#E4E8F5;--border2:#C8D0EE;--text:#0A0E1A;--muted:#4A5480;--dim:#8F9BC4;--green:#0A7C3E;--green-light:#D1FAE5;}
+body{min-height:100vh;background:var(--bg);font-family:'Barlow',sans-serif;color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px}
+
+.demo-bar{width:100%;max-width:580px;background:#FFF7ED;border:1.5px solid #FDE68A;border-radius:4px;padding:8px 16px;margin-bottom:16px;font-size:12px;color:#92400E;font-weight:600;display:flex;align-items:center;gap:8px}
+.demo-bar span{font-weight:400}
+
+.browser-bar{width:100%;max-width:580px;background:#e8eaf0;border-radius:6px 6px 0 0;padding:8px 14px;display:flex;align-items:center;gap:10px}
+.dots{display:flex;gap:5px}
+.dot{width:10px;height:10px;border-radius:50%}
+.url-bar{flex:1;background:#fff;border-radius:3px;padding:5px 12px;font-size:11px;color:var(--muted);font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.container{width:100%;max-width:580px}
+
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:20px;justify-content:center}
+.brand-icon{width:32px;height:32px;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+.brand-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--navy)}
+
+.card{background:var(--card);border:2px solid var(--text);border-radius:0 0 4px 4px;box-shadow:5px 5px 0 var(--text);overflow:hidden}
+
+.card-header{background:var(--navy);padding:22px 28px}
+.card-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:.02em;text-transform:uppercase;color:#fff;line-height:1.1}
+.card-sub{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px;font-weight:300}
+
+.interview-info{background:var(--blue-light);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;flex-direction:column;gap:7px}
+.info-row{display:flex;align-items:center;gap:10px;font-size:13px}
+.info-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);min-width:70px}
+.info-value{font-weight:500;color:var(--text)}
+.info-badge{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--navy);color:#fff;padding:3px 10px;border-radius:2px}
+
+.card-body{padding:24px 28px}
+
+.slots-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.slots-label span{width:5px;height:5px;border-radius:50%;background:var(--blue);display:inline-block}
+
+.slot-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.slot-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:center}
+.slot-row input{background:var(--bg);border:1.5px solid var(--border2);border-radius:3px;padding:9px 12px;color:var(--text);font-size:13.5px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .2s;width:100%}
+.slot-row input:focus{border-color:var(--navy)}
+.slot-remove{width:32px;height:32px;background:transparent;border:1.5px solid var(--border);border-radius:3px;color:var(--dim);cursor:pointer;font-size:16px;transition:all .15s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.slot-remove:hover{background:#FEE2E2;border-color:#dc2626;color:#dc2626}
+.add-slot{background:transparent;border:1.5px dashed var(--border2);border-radius:3px;padding:9px;color:var(--muted);font-size:13px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;width:100%;transition:all .15s;margin-bottom:18px}
+.add-slot:hover{border-color:var(--navy);color:var(--navy);background:var(--blue-light)}
+
+.note-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+textarea{background:var(--bg);border:1.5px solid var(--border2);border-radius:3px;padding:10px 12px;color:var(--text);font-size:13.5px;font-family:'Barlow',sans-serif;outline:none;width:100%;resize:vertical;min-height:70px;transition:border-color .2s}
+textarea:focus{border-color:var(--navy)}
+textarea::placeholder{color:var(--dim);font-weight:300}
+
+.card-footer{padding:18px 28px;border-top:1px solid var(--border);background:var(--bg);display:flex;justify-content:flex-end}
+.submit-btn{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--navy);color:#fff;border:none;padding:12px 28px;cursor:pointer;transition:background .15s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.submit-btn:hover{background:var(--blue)}
+
+.success{text-align:center;padding:48px 28px}
+.success-icon{width:60px;height:60px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 18px;color:var(--green)}
+.success-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:var(--navy);margin-bottom:8px}
+.success-sub{font-size:14px;color:var(--muted);font-weight:300;max-width:360px;margin:0 auto}
+
+.footer-note{margin-top:16px;font-size:11px;color:var(--dim);text-align:center;letter-spacing:.04em}
+@media(max-width:580px){.card-body,.card-header,.card-footer,.interview-info{padding:18px 20px}.slot-row{grid-template-columns:1fr auto}}
+</style>
+</head>
+<body>
+<script>
+// Read URL params passed from Rhythm
+var params = new URLSearchParams(window.location.search);
+var candidate = params.get('name') || 'Jordan Taylor';
+var role = params.get('role') || 'Senior Marketing Manager';
+var stage = params.get('stage') || 'Final Round';
+var duration = params.get('duration') || '60 minutes';
+var mode = params.get('mode') || 'Virtual';
+var req = params.get('req') || 'R-04421';
+var firstName = candidate.split(' ')[0];
+</script>
+
+<div class="demo-bar">
+  &#9888; <span>Demo mode — This is a preview of what the candidate would receive as a unique link from Rhythm.</span>
+</div>
+
+<div class="browser-bar">
+  <div class="dots">
+    <div class="dot" style="background:#ff5f57"></div>
+    <div class="dot" style="background:#ffbd2e"></div>
+    <div class="dot" style="background:#28c840"></div>
+  </div>
+  <div class="url-bar" id="urlBar">rhythm.talent.io/availability/loading...</div>
+</div>
+
+<div class="container">
+  <div class="brand">
+    <div class="brand-icon">&#9836;</div>
+    <div class="brand-name">Rhythm</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-eyebrow">Interview Scheduling</div>
+      <div class="card-title">Share Your Availability</div>
+      <div class="card-sub" id="cardSub">Loading...</div>
+    </div>
+
+    <div class="interview-info">
+      <div class="info-row">
+        <div class="info-label">Role</div>
+        <div class="info-value" id="infoRole"></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Stage</div>
+        <div class="info-badge" id="infoStage"></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Duration</div>
+        <div class="info-value" id="infoDuration"></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Format</div>
+        <div class="info-value" id="infoMode"></div>
+      </div>
+    </div>
+
+    <div id="formView">
+      <div class="card-body">
+        <div class="slots-label"><span></span>Your Available Times</div>
+        <div class="slot-list" id="slotList">
+          <div class="slot-row">
+            <input type="date" class="slot-date"/>
+            <input type="time" class="slot-time"/>
+            <button class="slot-remove" onclick="removeSlot(this)">&#215;</button>
+          </div>
+          <div class="slot-row">
+            <input type="date" class="slot-date"/>
+            <input type="time" class="slot-time"/>
+            <button class="slot-remove" onclick="removeSlot(this)">&#215;</button>
+          </div>
+        </div>
+        <button class="add-slot" onclick="addSlot()">+ Add Another Time</button>
+        <div class="note-label">Anything we should know?</div>
+        <textarea placeholder="Time zone, scheduling constraints, preferences..."></textarea>
+      </div>
+      <div class="card-footer">
+        <button class="submit-btn" onclick="submit()">Submit Availability &#8594;</button>
+      </div>
+    </div>
+
+    <div id="successView" style="display:none">
+      <div class="success">
+        <div class="success-icon">&#10003;</div>
+        <div class="success-title">You're All Set!</div>
+        <div class="success-sub">Your availability has been sent to the recruiting team. You'll receive a confirmation with interview details shortly.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">Powered by Rhythm &mdash; Talent Acquisition Scheduling</div>
+</div>
+
+<script>
+// Populate from URL params
+document.getElementById('urlBar').textContent = 'rhythm.talent.io/availability/' + req.toLowerCase() + '/' + candidate.toLowerCase().replace(/\s+/g,'-');
+document.getElementById('cardSub').textContent = 'Hi ' + firstName + '! Please share a few times that work for you and we\'ll confirm your interview shortly.';
+document.getElementById('infoRole').textContent = role;
+document.getElementById('infoStage').textContent = stage;
+document.getElementById('infoDuration').textContent = duration;
+document.getElementById('infoMode').textContent = mode;
+
+function addSlot(){
+  var row = document.createElement("div"); row.className = "slot-row";
+  row.innerHTML = '<input type="date" class="slot-date"/><input type="time" class="slot-time"/><button class="slot-remove" onclick="removeSlot(this)">&#215;</button>';
+  document.getElementById("slotList").appendChild(row);
+}
+function removeSlot(btn){ btn.parentElement.remove(); }
+function submit(){
+  document.getElementById("formView").style.display = "none";
+  document.getElementById("successView").style.display = "block";
+}
+</script>
+</body>
+</html>
